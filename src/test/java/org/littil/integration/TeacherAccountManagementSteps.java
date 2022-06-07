@@ -23,91 +23,91 @@ public class TeacherAccountManagementSteps implements En {
         Given("^user (.*?) is new to the platform", (String name) -> {
             assertThat(state.getCurrentUser()).isNull();
         });
-        When("^(.*?) indicates they want to register as a teacher", (String name) -> {
+        When("^(.*?) indicates (?:he|she|they) wants to register as a teacher", (String name) -> {
             assertThat(state.getCurrentUser()).isNull();
             wd.getDriver().navigate().to("http://localhost:4200");
             page.goToPage();
 
         });
-        Then("^they are presented with a registration form", page::assertFormIsPresent);
+        Then("^(?:he|she|they) (?:is|are) presented with a registration form", page::assertFormIsPresent);
 
-        When("^they give their first name as (.*?)$", page::enterFirstName);
+        When("^(?:he|she|they) gives (?:her|his|their) first name as (.*?)$", page::enterFirstName);
 
-        When("^their surname as (.*?)", page::enterSurname);
+        When("^(?:her|his|their) surname as (.*?)", page::enterSurname);
 
-        When("^their email as (.*?)$", page::enterEmail);
+        When("^(?:her|his|their) email as (.*?)$", page::enterEmail);
 
-        When("^their password (?:as|to) (.*?)$", (String pwd) -> {
+        When("^(?:her|his|their) password (?:as|to) (.*?)$", (String pwd) -> {
             page.enterPassword(pwd);
             page.enterPasswordConfirmation(pwd);
         });
 
-        When("^their post code (?:as|to) (\\d+)", page::enterPostcode);
+        When("^(?:her|his|their) post code (?:as|to) (\\d+)", page::enterPostcode);
 
-        When("^their country as (.*?)$", page::enterCountry);
+        When("^(?:her|his|their) country as (.*?)$", page::enterCountry);
 
-        And("^their profile text (?:as|to) (.*?)$", page::enterProfileText);
+        And("^(?:her|his|their) profile text (?:as|to) (.*?)$", page::enterProfileText);
 
-        And("^their available days (?:as|to) (.*?)$", (String list) -> {
+        And("^(?:her|his|their) available days (?:as|to) (.*?)$", (String list) -> {
             var uniqueDays = Set.of(StringUtils.split(list, ","));
             for (String weekday : uniqueDays) {
                 page.selectAvailableDay(weekday);
             }
         });
-        When("^indicates that they agree with the privacy statement", page::togglePrivacyStatement);
+        When("^indicates that (?:he|she|they) agrees? with the privacy statement", page::togglePrivacyStatement);
 
-        When("^they confirm the registration", page::sendRegistration);
+        When("^(?:he|she|they) confirms? the registration", page::sendRegistration);
 
-        Then("^they receive an email at (.*?) asking to activate their account", (String email) -> {
-
-        });
-
-        When("^they follow the activation instructions in the email", () -> {
+        Then("^(?:he|she|they) receives? an email at (.*?) asking to activate (?:her|his|their) account", (String email) -> {
 
         });
 
-        Then("^their account is activated", () -> {
+        When("^(?:he|she|they) follows? the activation instructions in the email", () -> {
+
+        });
+
+        Then("^(?:her|his|their) account is activated", () -> {
 
         });
 
 
-        // Updates their profile data
+        // Updates (?:her|his|their) profile data
         Given("^a user with email (.*?) is known to the platform", (String email) -> {
             state.addUserByEmail(email);
         });
-        When("this user logs into the system", () -> {
+        When("(\\w+) logs into the system", (String user) -> {
             String currentUser = state.getCurrentUser();
         });
-        And("^indicates they want to change their profile", () -> {
+        And("^indicates (?:he|she|they) wants? to change (?:her|his|their) profile", () -> {
 
         });
-        Then("^they can update their first name to (.*?) and surname to (.*?)$", (String firstName, String surname) -> {
+        Then("^(?:he|she|they) can update (?:her|his|their) first name to (.*?) and surname to (.*?)$", (String firstName, String surname) -> {
 
         });
 
-        And("^they receive a confirmation that the changes have been made", () -> {
+        And("^(?:he|she|they) receives? a confirmation that the changes have been made", () -> {
 
         });
-        And("^indicates that they want to delete their account", () -> {
+        And("^indicates that (?:he|she|they) wants? to delete (?:her|his|their) account", () -> {
 
         });
-        And("^confirms their decision to delete", () -> {
+        And("^confirms (?:her|his|their) decision to delete", () -> {
 
         });
-        And("^they receive email confirmation that the account has been deleted", () -> {
+        And("^(?:he|she|they) receives? email confirmation that the account has been deleted", () -> {
             String currentUser = state.getCurrentUser();
         });
-        And("^they can no longer log in", () -> {
+        And("^(?:he|she|they) can no longer log in", () -> {
             String currentUser = state.getCurrentUser();
         });
-        Then("^their account details are updated$", () -> {
+        Then("^(?:her|his|their) account details (?:is|are) updated$", () -> {
         });
 
-        And("^indicates they want to change their email$", () -> {
+        And("^indicates (?:he|she|they) wants? to change (?:her|his|their) email$", () -> {
         });
-        Then("^they can update their email to (.*?)$", (String email) -> {
+        Then("^(?:he|she|they) can update (?:her|his|their) email to (.*?)$", (String email) -> {
         });
-        And("^they receive an email at (.*?) confirming the change$", (String email) -> {
+        And("^(?:he|she|they) receives? an email at (.*?) confirming the change$", (String email) -> {
         });
 
     }

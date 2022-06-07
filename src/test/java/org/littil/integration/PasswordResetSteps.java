@@ -8,15 +8,15 @@ public class PasswordResetSteps implements En {
 
     public PasswordResetSteps() {
 
-        When("^this user indicates they have forgotten their password$", () -> {
+        When("^(\\w+) indicates (?:he|she|they) (?:has|have) forgotten (?:his|her|their) password$", (String user) -> {
         });
-        Then("^they can enter their email as (.*?)$", (String email) -> {
+        Then("^(?:he|she|they) can enter (?:his|her|their) email as (.*?)$", (String email) -> {
         });
-        And("^they receive an email at (.*?) with a link to a password page$", (String email) -> {
+        And("^(?:he|she|they) receives? an email at (.*?) with a link to a password page$", (String email) -> {
         });
-        When("^they follow the link to the password reset page$", () -> {
+        When("^(?:he|she|they) follows the link to the password reset page$", () -> {
         });
-        Then("^they can enter a new password as (.*?)$", (String password) -> {
+        Then("^(?:he|she|they) can enter a new password as (.*?)$", (String password) -> {
         });
 
     }
