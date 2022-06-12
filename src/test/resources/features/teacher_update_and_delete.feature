@@ -3,8 +3,8 @@ Feature: Management of the teacher profile
 
   Background:
     Given a user with email iris.de.bruin@outlook.com is known to the platform
-  
-  Scenario: Iris updates her account data
+
+  Scenario: update the teacher record of the logged-in user
     When Iris logs into the system
     And indicates she wants to change her profile
     Then she can update her first name to Irina and surname to de Zwart
@@ -14,28 +14,28 @@ Feature: Management of the teacher profile
     And her available days as Tuesday,Thursday
     Then her account details are updated
 
-  Scenario: Iris updates her email
+  Scenario: update the email of the logged-in user
     When Iris logs into the system
     And indicates she wants to change her email
     Then she can update her email to iris.de.bruin@gmail.com
     And she receives an email at iris.de.bruin@gmail.com confirming the change
 
-   Scenario: Iris has forgotten her password
-     When Iris indicates she has forgotten her password
-     Then she can enter her email as iris.de.bruin@gmail.com
-     And she receives an email at iris.de.bruin@gmail.com with a link to a password page
-     When she follows the link to the password reset page
-     Then she can enter a new password as updatedPwd
-     And she can log in with email iris.de.bruin@outlook.com and password updatedPwd
+  Scenario: Resetting the password by the logged-in user
+    When Iris indicates she has forgotten her password
+    Then she can enter her email as iris.de.bruin@gmail.com
+    And she receives an email at iris.de.bruin@gmail.com with a link to a password page
+    When she follows the link to the password reset page
+    Then she can enter a new password as updatedPwd
+    And she can log in with email iris.de.bruin@outlook.com and password updatedPwd
 
-  Scenario: Iris wants to delete her account
+  Scenario: delete the teacher record of the logged-in user
     When Iris logs into the system
     And indicates that she wants to delete her account
     And confirms her decision to delete
     Then she receives email confirmation that the account has been deleted
     And she can no longer log in
 
+  Scenario: update a teacher record for a random user
 
-
-
+  Scenario: delete a teacher record for a random user
 
