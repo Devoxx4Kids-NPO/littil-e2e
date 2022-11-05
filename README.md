@@ -23,4 +23,13 @@ Some steps in the process, particularly the registration, requires human interve
 * Test scripts should be readable and manageable by both frontend and backend developers and ideally be self-documenting.
 
 ### Choice for [Cypress](https://cypress.io)
+Cypress is a full-featured, modern test framework under active development. Its JavaScript API should be easy to learn for frontend developers and offer no great difficulty for backend developers.
+Experience of using it at Rabobank are positive.
+A factory docker image is available which allows it to be run cleanly inside a docker-compose environment. 
 
+### Test doubles and setup
+While the idea for e2E testing is to approach the production setup as closely as possible, this is not always easy or feasible, especially because Littil uses a third-party API for authorization (Auth0) and sends emails as part of the business flow.
+It is essential that e2e tests can run fully containerized, so there are only two options: either you provide authorization and email service as dockerized services, or the backend has a development-mode built-in to bypass these functions.
+Both have benefits and drawbacks. When test doubles are present as a container, the backend can be fully agnostic as to the environment it is run in, and configuration need only differ by another URL to connect to.
+
+Note that all environment configuration 
