@@ -12,3 +12,5 @@ services:
       MYSQL_USER: littil
       MYSQL_PASSWORD: littil
       MYSQL_ROOT_PASSWORD: littil
+    volumes:
+      - ./initdb.d:/docker-entrypoint-initdb.d:ro
