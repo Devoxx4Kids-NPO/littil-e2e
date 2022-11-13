@@ -1,9 +1,20 @@
 # work in progress
 version: "3.1"
-
 services:
-  dbhost:
-    image: mariadb:10.6
+  backend:
+    image: littil-backend:latest
+    container_name: littil-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    environment:
+      - quarkus.datasource.username=littil
+      - quarkus.datasource.password=littil
+      - quarkus.datasource.jdb.url=jdbc:mariadb://database:3306/littil
+  database:
+    build: db
+    container_name: littil-test-db
     restart: on-failure
     ports:
       - "3306:3306"
