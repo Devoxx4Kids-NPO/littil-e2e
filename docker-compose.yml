@@ -1,20 +1,10 @@
 # work in progress
 version: "3.1"
+
 services:
-  backend:
-    image: littil-backend:latest
-    container_name: littil-backend
-    ports:
-      - "8080:8080"
-    depends_on:
-      - database
-    environment:
-      - quarkus.datasource.username=littil
-      - quarkus.datasource.password=littil
-      - quarkus.datasource.jdb.url=jdbc:mariadb://database:3306/littil
-  database:
-    build: db
-    container_name: littil-test-db
+  dbhost:
+    image: mariadb:10.6
+    container_name: dbhost
     restart: on-failure
     ports:
       - "3306:3306"
@@ -25,3 +15,22 @@ services:
       MYSQL_ROOT_PASSWORD: littil
     volumes:
       - ./initdb.d:/docker-entrypoint-initdb.d:ro
+  backend:
+    image: quarkus/backend-jvm # Local image for now
+    container_name: backend
+    depends_on:
+      - dbhost
+    environment:
+      - QUARKUS_DATASOURCE_JDBC_URL=jdbc:mariadb://dbhost:3306/littil
+      - QUARKUS_DATASOURCE_USERNAME=littil
+      - QUARKUS_DATASOURCE_PASSWORD=littil
+      - OIDC_CLIENT_ID= # Depending on wiremock container for OAuth
+      - OIDC_CLIENT_SECRET= # Depending on wiremock container for OAuth
+      - OIDC_TENANT= # Depending on wiremock container for OAuth
+      - M2M_CLIENT_ID= # Depending on wiremock container for OAuth
+      - M2M_CLIENT_SECRET= # Depending on wiremock container for OAuth
+      - SMTP_HOST= # Depending on wiremock container for OAuth
+      - SMTP_USERNAME= # Depending on wiremock container for OAuth
+      - SMTP_PASSWORD= # Depending on wiremock container for OAuth
+    ports:
+      - 8080:8080
