@@ -3,7 +3,7 @@ version: "3.1"
 
 services:
   dbhost:
-    image: mariadb:10.6
+    build: db
     container_name: dbhost
     restart: on-failure
     ports:
@@ -13,8 +13,6 @@ services:
       MYSQL_USER: littil
       MYSQL_PASSWORD: littil
       MYSQL_ROOT_PASSWORD: littil
-    volumes:
-      - ./initdb.d:/docker-entrypoint-initdb.d:ro
   backend:
     image: quarkus/backend-jvm # Local image for now
     container_name: backend
@@ -29,8 +27,8 @@ services:
       - OIDC_TENANT= # Depending on wiremock container for OAuth
       - M2M_CLIENT_ID= # Depending on wiremock container for OAuth
       - M2M_CLIENT_SECRET= # Depending on wiremock container for OAuth
-      - SMTP_HOST= # Depending on wiremock container for OAuth
-      - SMTP_USERNAME= # Depending on wiremock container for OAuth
-      - SMTP_PASSWORD= # Depending on wiremock container for OAuth
+      - SMTP_HOST=smtp-stub.local
+      - SMTP_USERNAME=username
+      - SMTP_PASSWORD=password
     ports:
       - 8080:8080
