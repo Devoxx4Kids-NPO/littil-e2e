@@ -22,11 +22,11 @@ services:
       - QUARKUS_DATASOURCE_JDBC_URL=jdbc:mariadb://dbhost:3306/littil
       - QUARKUS_DATASOURCE_USERNAME=littil
       - QUARKUS_DATASOURCE_PASSWORD=littil
-      - OIDC_CLIENT_ID= # Depending on wiremock container for OAuth
-      - OIDC_CLIENT_SECRET= # Depending on wiremock container for OAuth
-      - OIDC_TENANT= # Depending on wiremock container for OAuth
-      - M2M_CLIENT_ID= # Depending on wiremock container for OAuth
-      - M2M_CLIENT_SECRET= # Depending on wiremock container for OAuth
+      - OIDC_CLIENT_ID=${OIDC_CLIENT_ID} # Depending on wiremock container for OAuth
+      - OIDC_CLIENT_SECRET=${OIDC_CLIENT_ID} # Depending on wiremock container for OAuth
+      - OIDC_TENANT=${OIDC_TENANT} # Depending on wiremock container for OAuth
+      - M2M_CLIENT_ID=${M2M_CLIENT_ID} # Depending on wiremock container for OAuth
+      - M2M_CLIENT_SECRET=${M2M_CLIENT_SECRET} # Depending on wiremock container for OAuth
       - SMTP_HOST=smtp-stub.local
       - SMTP_USERNAME=username
       - SMTP_PASSWORD=password
