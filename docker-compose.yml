@@ -5,6 +5,7 @@ services:
   dbhost:
     build: db
     container_name: dbhost
+    #hostname: dbhost
     restart: on-failure
     ports:
       - "3306:3306"
@@ -13,22 +14,56 @@ services:
       MYSQL_USER: littil
       MYSQL_PASSWORD: littil
       MYSQL_ROOT_PASSWORD: littil
-  backend:
+#    networks:
+#      - e2e-test
+  littil-backend:
     image: quarkus/backend-jvm # Local image for now
-    container_name: backend
+    container_name: littil-backend
+    #hostname: backend
     depends_on:
       - dbhost
     environment:
       - QUARKUS_DATASOURCE_JDBC_URL=jdbc:mariadb://dbhost:3306/littil
       - QUARKUS_DATASOURCE_USERNAME=littil
       - QUARKUS_DATASOURCE_PASSWORD=littil
-      - OIDC_CLIENT_ID=${OIDC_CLIENT_ID} # Depending on wiremock container for OAuth
-      - OIDC_CLIENT_SECRET=${OIDC_CLIENT_ID} # Depending on wiremock container for OAuth
-      - OIDC_TENANT=${OIDC_TENANT} # Depending on wiremock container for OAuth
-      - M2M_CLIENT_ID=${M2M_CLIENT_ID} # Depending on wiremock container for OAuth
-      - M2M_CLIENT_SECRET=${M2M_CLIENT_SECRET} # Depending on wiremock container for OAuth
+      - OIDC_CLIENT_ID=${OIDC_CLIENT_ID}
+      - OIDC_CLIENT_SECRET=${OIDC_CLIENT_SECRET}
+      - OIDC_TENANT=${OIDC_TENANT}
+      - M2M_CLIENT_ID=${M2M_CLIENT_ID}
+      - M2M_CLIENT_SECRET=${M2M_CLIENT_SECRET}
       - SMTP_HOST=smtp-stub.local
       - SMTP_USERNAME=username
       - SMTP_PASSWORD=password
     ports:
       - 8080:8080
+#    networks:
+#      - e2e-test
+  littil-frontend:
+    image: littil-frontend # Local image for now
+    container_name: littil-frontend
+    depends_on:
+      - littil-backend
+    environment:
+      - OIDC_CLIENT_ID=${OIDC_CLIENT_ID} # Depending on wiremock container for OAuth
+      - OIDC_CLIENT_SECRET=${OIDC_CLIENT_ID} # Depending on wiremock container for OAuth
+      - OIDC_TENANT=${OIDC_TENANT} # Depending on wiremock container for OAuth
+    ports:
+      - 80:80
+#    networks:
+#      - e2e-test
+  cypress:
+    image: "cypress/included:12.3.0"
+    container_name: cypress
+    depends_on:
+     - littil-frontend
+    # "cypress/included" images have entrypoint set to globally installed cypress
+    # so the command can simply add any arguments
+    command: "--browser edge"
+    working_dir: /cypress
+    volumes:
+      - ./cypress:/cypress
+#    networks:
+#      - e2e-test
+
+#networks:
+#  e2e-test:

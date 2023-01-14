@@ -9,3 +9,7 @@ docker-compose-local.yml
 .classpath
 .project
 .settings
+
+**/cypress/videos
+**/cypress/screenshots
+
