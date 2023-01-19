@@ -14,12 +14,9 @@ services:
       MYSQL_USER: littil
       MYSQL_PASSWORD: littil
       MYSQL_ROOT_PASSWORD: littil
-#    networks:
-#      - e2e-test
   littil-backend:
     image: quarkus/backend-jvm # Local image for now
     container_name: littil-backend
-    #hostname: backend
     depends_on:
       - dbhost
     environment:
@@ -36,11 +33,8 @@ services:
       - SMTP_PASSWORD=password
     ports:
       - 8080:8080
-#    networks:
-#      - e2e-test
   littil-frontend:
     image: littil-frontend # Local image for now
-    container_name: littil-frontend
     depends_on:
       - littil-backend
     environment:
@@ -49,21 +43,14 @@ services:
       - OIDC_TENANT=${OIDC_TENANT} # Depending on wiremock container for OAuth
     ports:
       - 80:80
-#    networks:
-#      - e2e-test
   cypress:
-    image: "cypress/included:12.3.0"
+    image: 'cypress/included:12.3.0'
     container_name: cypress
+    links:
+      - littil-frontend:littil-frontend
     depends_on:
      - littil-frontend
-    # "cypress/included" images have entrypoint set to globally installed cypress
-    # so the command can simply add any arguments
-    command: "--browser edge"
-    working_dir: /cypress
     volumes:
       - ./cypress:/cypress
-#    networks:
-#      - e2e-test
-
-#networks:
-#  e2e-test:
+      - ./cypress.docker.config.js:/cypress.config.js
+    entrypoint: "cypress run --headless --browser edge --reporter junit --reporter-options mochaFile=./cypress/test-output-[hash].xml"

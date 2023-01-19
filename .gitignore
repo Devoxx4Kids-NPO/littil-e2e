@@ -12,4 +12,5 @@ docker-compose-local.yml
 
 **/cypress/videos
 **/cypress/screenshots
+**/cypress/test-output*.xml
 
