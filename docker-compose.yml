@@ -3,7 +3,9 @@ version: "3.1"
 
 services:
   dbhost:
-    build: db
+    build:
+      dockerfile: db/Dockerfile
+      context: .
     container_name: dbhost
     #hostname: dbhost
     restart: on-failure
@@ -32,25 +34,23 @@ services:
       - SMTP_USERNAME=username
       - SMTP_PASSWORD=password
     ports:
-      - 8080:8080
+      - "8080:8080"
   littil-frontend:
     image: littil-frontend # Local image for now
     depends_on:
       - littil-backend
-    environment:
-      - OIDC_CLIENT_ID=${OIDC_CLIENT_ID} # Depending on wiremock container for OAuth
-      - OIDC_CLIENT_SECRET=${OIDC_CLIENT_ID} # Depending on wiremock container for OAuth
-      - OIDC_TENANT=${OIDC_TENANT} # Depending on wiremock container for OAuth
+    env_file:
+      - .env
     ports:
-      - 80:80
+      - "80:80"
   cypress:
     image: 'cypress/included:12.3.0'
     container_name: cypress
-    links:
-      - littil-frontend:littil-frontend
+    env_file:
+      - .env
     depends_on:
      - littil-frontend
     volumes:
       - ./cypress:/cypress
       - ./cypress.docker.config.js:/cypress.config.js
-    entrypoint: "cypress run --headless --browser edge --reporter junit --reporter-options mochaFile=./cypress/test-output-[hash].xml"
+    entrypoint: "cypress run --headless --browser electron --reporter junit --reporter-options mochaFile=./cypress/test-output-[hash].xml"
