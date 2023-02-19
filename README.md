@@ -25,6 +25,6 @@ docker run -p3306:3306 --name=littil-db littil-db
 ```
 
 ### Environment variables
-To run the cypress tests some environment variables need to be set in the .env file. Variables that are prefixed with 
-"cypress_" are automatically picked up by Cypress and stripped of the prefix. For example "cypress_variable123" is 
-available as "variable123" in the environment.
+To run the cypress tests some environment variables need to be set in the cypress.env.json file. 
+With this option you can use this file to run tests with a locallhy installed cypress and/or with cypress running in a docer file.
+This is not possible when you add the variabeles in the .env file with a 'cypress_' prefix.
