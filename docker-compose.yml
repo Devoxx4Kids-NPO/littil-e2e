@@ -52,5 +52,6 @@ services:
      - littil-frontend
     volumes:
       - ./cypress:/cypress
+      - ./cypress.env.json:/cypress.env.json
       - ./cypress.docker.config.js:/cypress.config.js
     entrypoint: "cypress run --headless --browser electron --reporter junit --reporter-options mochaFile=./cypress/test-output-[hash].xml"
