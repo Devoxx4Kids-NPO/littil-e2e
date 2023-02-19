@@ -1,3 +1,17 @@
 /.idea/
 target
 *.iml
+.DS_Store
+docker-compose-local.yml
+
+.env
+
+.classpath
+.project
+.settings
+
+**/cypress/videos
+**/cypress/screenshots
+**/cypress/test-output*.xml
+
+cypress.env.json
