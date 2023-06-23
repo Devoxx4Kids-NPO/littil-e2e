@@ -14,7 +14,6 @@ public class TeacherAccountManagementSteps implements En {
 
     private UserState state;
     private final RegistrationPage page;
-    WebDriverAdapter wd;
 
     public TeacherAccountManagementSteps(UserState scenarioState, RegistrationPage page) {
         this.state = scenarioState;

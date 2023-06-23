@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class RegistrationPage {
 
     WebDriverAdapter wd;
+
     @Before
     public void before(Scenario scenario) {
         wd = WebDriverAdapter.getinstance();

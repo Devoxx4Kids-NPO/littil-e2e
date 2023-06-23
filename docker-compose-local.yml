@@ -1,0 +1,34 @@
+# work in progress
+version: "3.1"
+
+services:
+  dbhost:
+    build: db
+    container_name: dbhost
+    restart: on-failure
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: littil
+      MYSQL_USER: littil
+      MYSQL_PASSWORD: littil
+      MYSQL_ROOT_PASSWORD: littil
+  backend:
+    image: quarkus/backend-jvm # Local image for now
+    container_name: backend
+    depends_on:
+      - dbhost
+    environment:
+      - QUARKUS_DATASOURCE_JDBC_URL=jdbc:mariadb://dbhost:3306/littil
+      - QUARKUS_DATASOURCE_USERNAME=littil
+      - QUARKUS_DATASOURCE_PASSWORD=littil
+      - OIDC_CLIENT_ID=JqDqqoJ4Ne9BFTBQQSIRgIDkQG1CiXJP
+      - OIDC_CLIENT_SECRET=qHek_XbLYqRtYSWhksD6NrmBJlHgkUc6KKbe_nwaici-_hb2zS0NlIg4sEoddj5a
+      - OIDC_TENANT=https://dev-g60bne29.eu.auth0.com
+      - M2M_CLIENT_ID=faB36o70lcmY6onhL7Lr1jSn7WJ4lYTb
+      - M2M_CLIENT_SECRET=_oakgsoRtftjlfyED4w2GfjyS8ESLxSDtmzi2egiHD7I16vtqbPiEDEazullE2fc
+      - SMTP_HOST=smtp-stub.local
+      - SMTP_USERNAME=username
+      - SMTP_PASSWORD=password
+    ports:
+      - 8080:8080
